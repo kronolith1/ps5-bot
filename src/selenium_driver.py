@@ -37,7 +37,7 @@ def check_for_stock():
     driver = webdriver.Chrome(chrome_options=chrome_options)
     wait = WebDriverWait(driver, 20)
 
-    driver.get("https://www.bol.com/nl/p/sony-playstation-5-digital-edition-console/9300000004162392/?ruleRedirect=1&sI=ps5%20digital&variants=") # PS5 URL
+    driver.get("https://www.bol.com/nl/p/sony-playstation-5-console/9300000004162282/?ruleRedirect=1&sI=ps5&variants=") # PS5 URL
     driver.find_element_by_xpath("//*[@id='modalWindow']/div[2]/div[2]/wsp-consent-modal/div[2]/div/div[1]/button").click() # Accept cookies
 
     try:
@@ -75,7 +75,7 @@ def place_order(driver, wait):
 
     # Create ordercompleted.txt file to tell the script the order has been placed
     os.mknod("ordercompleted.txt")
-    msg = "Congratulations! Your order for the PS5 Digital Edition has been placed with BOL.COM. Please check your account for further details."
+    msg = "Congratulations! Your order for the PS5 Disc Edition has been placed with BOL.COM. Please check your account for further details."
     sendtelegram(msg)
     print(f"{time} - BOL.COM - ORDER SUCCESFULLY PLACED")
 
