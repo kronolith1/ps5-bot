@@ -6,6 +6,7 @@ This bot checks stock availability on the PS5 for Bol.com every 2 seconds. When 
 
 * NodeJS
 * Selenium
+* Telegram-bot
 * Python 3
 * Chrome + Chrome webdriver
 
