@@ -47,15 +47,23 @@ def check_for_stock():
         driver.find_element_by_class_name("buy-block__title")
         print(f"{time} - BOL.COM - NOT IN STOCK")
     except NoSuchElementException:
-        print(f"{time} - BOL.COM - !! IN STOCK !! - Trying to order one for you, kind sir...")
-        # Lets check if the file ordercompleted.txt is present to tell if we already ordered this product.
-        if os.path.isfile('/app/persistent/ps5c-ordercompleted.txt'):
-            print ("Order was already completed, no further action!")
-        elif os.path.isfile('/app/persistent/ps5c-checkoutinprogress.txt'):
-            print ("Checkout still in progress...")
+        # Check if item is sold by BOL.COM and not by an 3rd party.
+        buyerid = driver.find_element_by_class_name("product-seller").text
+        print("The seller is: " + buyerid)
+        
+        if "Verkoop door bol.com" in buyerid:
+            print(f"{time} - BOL.COM - !! IN STOCK !! - Trying to order one for you, kind sir...")
+            # Lets check if the file ordercompleted.txt is present to tell if we already ordered this product.
+            if os.path.isfile('/app/persistent/ps5c-ordercompleted.txt'):
+                print ("Order was already completed, no further action!")
+            elif os.path.isfile('/app/persistent/ps5c-checkoutinprogress.txt'):
+                print ("Checkout still in progress...")
+            else:
+                print ("No order was yet placed, proceeding to order...")
+                place_order(driver, wait)           
         else:
-            print ("No order was yet placed, proceeding to order...")
-            place_order(driver, wait)
+            print(f"{time} - BOL.COM - IN STOCK BUT NOT SOLD BY BOL.COM")
+
 
 def place_order(driver, wait):
     # Create paymentfile to prevent multiple orders during checkout
