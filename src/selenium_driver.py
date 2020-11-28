@@ -90,7 +90,7 @@ def place_order(driver, wait):
     paymentrequired = "Your BOT has prepared an order with BOL.com for the PS5 Disc Console - Please open the link and approve payment within 2 minutes - " + requiredurl
     sendtelegram(paymentrequired)
 
-    # Check if we did make it to the Bunq iDeal page and create ordercompleted file if true
+    # Check if we did make it to the iDeal page of the configured bank and create ordercompleted file if true
     createorderfile(requiredurl)
     
     # Wait for user to complete the payment
@@ -121,7 +121,8 @@ def createorderfile(requiredurl, bank=my_bank):
     """
     Create orderfile to make sure we do not buy this again.
     """
-    requiredurl.find(bank)
-    print(bank + " page found, creating file to prevent multiple buys")
-    os.mknod("/app/persistent/ps5c-ordercompleted.txt")
-    
+    if bank in requiredurl:
+    	print(bank + " page found, creating file to prevent multiple buys")
+    	os.mknod("/app/persistent/ps5c-ordercompleted.txt")
+    else:
+	print("Configured bank not found")
